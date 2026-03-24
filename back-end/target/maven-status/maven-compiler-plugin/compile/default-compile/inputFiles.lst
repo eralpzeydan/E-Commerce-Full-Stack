@@ -1,0 +1,12 @@
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/EcommerceApplication.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/HealthCheckController.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/ProductController.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/ErrorResponse.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/product/CreateProductRequest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/product/ProductResponse.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/Product.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/DuplicateResourceException.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/GlobalExceptionHandler.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/repository/ProductRepository.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/service/ProductService.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/service/impl/ProductServiceImpl.java
