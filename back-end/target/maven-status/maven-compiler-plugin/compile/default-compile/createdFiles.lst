@@ -4,6 +4,7 @@ com/eralp/ecommerce/service/AuthService.class
 com/eralp/ecommerce/dto/order/OrderResponse.class
 com/eralp/ecommerce/dto/cart/CartItemResponse$CartItemResponseBuilder.class
 com/eralp/ecommerce/dto/common/PagedResponse$PagedResponseBuilder.class
+com/eralp/ecommerce/config/RedisConfig.class
 com/eralp/ecommerce/service/CartService.class
 com/eralp/ecommerce/entity/OrderItem.class
 com/eralp/ecommerce/dto/cart/CartResponse$CartResponseBuilder.class

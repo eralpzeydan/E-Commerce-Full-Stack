@@ -12,6 +12,9 @@ import com.eralp.ecommerce.repository.OrderItemRepository;
 import com.eralp.ecommerce.repository.ProductRepository;
 import com.eralp.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,6 +31,7 @@ public class ProductServiceImpl implements ProductService {
     private final OrderItemRepository orderItemRepository;
 
     @Override
+    @CacheEvict(value = "products", allEntries = true)
     @Transactional
     public ProductResponse createProduct(CreateProductRequest request) {
         Category category = findCategoryById(request.getCategoryId());
@@ -44,6 +48,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(
+            value = "products",
+            key = "'page:' + #page + ':size:' + #size + ':sortBy:' + #sortBy + ':sortDir:' + #sortDir.toLowerCase() + ':name:' + (#name == null ? '' : #name.trim().toLowerCase()) + ':categoryId:' + (#categoryId == null ? '' : #categoryId)"
+    )
     @Transactional(readOnly = true)
     public PagedResponse<ProductResponse> getAllProducts(
             int page,
@@ -95,13 +103,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Cacheable(value = "product", key = "#id")
     @Transactional(readOnly = true)
     public ProductResponse getProductById(Long id) {
+        System.out.println("🔥 DB HIT - productId: " + id);
         Product product = findProductById(id);
         return mapToResponse(product);
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "product", key = "#id"),
+            @CacheEvict(value = "products", allEntries = true)
+    })
     @Transactional
     public ProductResponse updateProduct(Long id, UpdateProductRequest request) {
         Product product = findProductById(id);
@@ -117,6 +131,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Caching(evict = {
+            @CacheEvict(value = "product", key = "#id"),
+            @CacheEvict(value = "products", allEntries = true)
+    })
     @Transactional
     public void deleteProduct(Long id) {
         Product product = findProductById(id);
@@ -180,4 +198,5 @@ public class ProductServiceImpl implements ProductService {
             throw new IllegalArgumentException("sortDir must be asc or desc");
         }
     }
+
 }

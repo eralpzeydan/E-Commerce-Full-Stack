@@ -1,5 +1,6 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/EcommerceApplication.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/PasswordConfig.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/RedisConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/SecurityConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/AdminController.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/AuthController.java
