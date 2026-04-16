@@ -6,6 +6,7 @@ import com.eralp.ecommerce.entity.User;
 import com.eralp.ecommerce.exception.DuplicateResourceException;
 import com.eralp.ecommerce.exception.ResourceNotFoundException;
 import com.eralp.ecommerce.repository.CartRepository;
+import com.eralp.ecommerce.repository.OrderRepository;
 import com.eralp.ecommerce.repository.UserRepository;
 import com.eralp.ecommerce.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class UserServiceImpl implements UserService {
 
    private final UserRepository userRepository;
    private final CartRepository cartRepository;
+   private final OrderRepository orderRepository;
 
    @Override
    @Transactional
@@ -62,6 +64,9 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long id){
         if (!userRepository.existsById(id)) {
            throw new ResourceNotFoundException("User not found with id: " + id);
+       }
+       if (orderRepository.existsByUserId(id)) {
+           throw new IllegalStateException("User cannot be deleted because they have orders");
        }
        cartRepository.findByUserId(id).ifPresent(cartRepository::delete);
        userRepository.deleteById(id);
