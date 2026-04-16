@@ -7,8 +7,11 @@ import com.eralp.ecommerce.entity.User;
 import com.eralp.ecommerce.exception.BadRequestException;
 import com.eralp.ecommerce.exception.UnauthorizedException;
 import com.eralp.ecommerce.repository.UserRepository;
+import com.eralp.ecommerce.security.JwtService;
 import com.eralp.ecommerce.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,8 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     @Transactional
@@ -43,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
                 .userId(savedUser.getId())
                 .name(toFullName(savedUser))
                 .email(savedUser.getEmail())
+                .token(null)
                 .message("User registered successfully")
                 .build();
     }
@@ -59,10 +65,14 @@ public class AuthServiceImpl implements AuthService {
             throw new UnauthorizedException("Invalid email or password");
         }
 
+        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        String token = jwtService.generateToken(userDetails);
+
         return AuthResponseDto.builder()
                 .userId(user.getId())
                 .name(toFullName(user))
                 .email(user.getEmail())
+                .token(token)
                 .message("Login successful")
                 .build();
     }

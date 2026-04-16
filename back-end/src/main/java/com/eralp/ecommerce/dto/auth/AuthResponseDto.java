@@ -10,5 +10,6 @@ public class AuthResponseDto {
     private Long userId;
     private String name;
     private String email;
+    private String token;
     private String message;
 }

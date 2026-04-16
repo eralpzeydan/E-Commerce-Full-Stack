@@ -5,6 +5,7 @@ import com.eralp.ecommerce.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,5 +22,10 @@ public class OrderController {
     public ResponseEntity<OrderResponse> checkout(@PathVariable Long userId) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(orderService.createOrderFromCart(userId));
+    }
+
+    @GetMapping("/secure-test")
+    public ResponseEntity<String> secureTest() {
+        return ResponseEntity.ok("You are authenticated");
     }
 }
