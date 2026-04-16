@@ -1,7 +1,6 @@
 package com.eralp.ecommerce.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,4 +22,7 @@ public class User {
 
     @Column(nullable = false, length = 225)
     private String email;
+
+    @Column(length = 255)
+    private String password;
 }

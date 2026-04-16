@@ -1,4 +1,6 @@
+com/eralp/ecommerce/dto/auth/LoginRequestDto.class
 com/eralp/ecommerce/repository/OrderRepository.class
+com/eralp/ecommerce/service/AuthService.class
 com/eralp/ecommerce/dto/order/OrderResponse.class
 com/eralp/ecommerce/dto/cart/CartItemResponse$CartItemResponseBuilder.class
 com/eralp/ecommerce/dto/common/PagedResponse$PagedResponseBuilder.class
@@ -11,6 +13,7 @@ com/eralp/ecommerce/dto/product/UpdateProductRequest.class
 com/eralp/ecommerce/repository/CartRepository.class
 com/eralp/ecommerce/dto/category/CreateCategoryRequest.class
 com/eralp/ecommerce/dto/order/OrderItemResponse$OrderItemResponseBuilder.class
+com/eralp/ecommerce/exception/UnauthorizedException.class
 com/eralp/ecommerce/entity/Product.class
 com/eralp/ecommerce/dto/cart/UpdateCartItemQuantityRequest.class
 com/eralp/ecommerce/dto/category/CategoryResponse$CategoryResponseBuilder.class
@@ -22,6 +25,8 @@ com/eralp/ecommerce/controller/CartController.class
 com/eralp/ecommerce/dto/cart/CartResponse.class
 com/eralp/ecommerce/service/impl/CategoryServiceImpl.class
 com/eralp/ecommerce/dto/cart/CartItemResponse.class
+com/eralp/ecommerce/config/PasswordConfig.class
+com/eralp/ecommerce/service/impl/AuthServiceImpl.class
 com/eralp/ecommerce/dto/order/OrderResponse$OrderResponseBuilder.class
 com/eralp/ecommerce/repository/OrderItemRepository.class
 com/eralp/ecommerce/entity/Cart.class
@@ -31,7 +36,11 @@ com/eralp/ecommerce/exception/GlobalExceptionHandler.class
 com/eralp/ecommerce/controller/UserController.class
 com/eralp/ecommerce/entity/Category.class
 com/eralp/ecommerce/service/CategoryService.class
+com/eralp/ecommerce/controller/AuthController.class
 com/eralp/ecommerce/service/OrderService.class
+com/eralp/ecommerce/dto/auth/AuthResponseDto.class
+com/eralp/ecommerce/dto/auth/RegisterRequestDto.class
+com/eralp/ecommerce/dto/auth/AuthResponseDto$AuthResponseDtoBuilder.class
 com/eralp/ecommerce/dto/category/CategoryResponse.class
 com/eralp/ecommerce/entity/CartItem.class
 com/eralp/ecommerce/service/impl/CartServiceImpl.class
