@@ -27,8 +27,10 @@ com/eralp/ecommerce/dto/cart/CartResponse.class
 com/eralp/ecommerce/service/impl/CategoryServiceImpl.class
 com/eralp/ecommerce/dto/cart/CartItemResponse.class
 com/eralp/ecommerce/config/PasswordConfig.class
+com/eralp/ecommerce/controller/AdminController.class
 com/eralp/ecommerce/service/impl/AuthServiceImpl.class
 com/eralp/ecommerce/dto/order/OrderResponse$OrderResponseBuilder.class
+com/eralp/ecommerce/entity/Role.class
 com/eralp/ecommerce/repository/OrderItemRepository.class
 com/eralp/ecommerce/entity/Cart.class
 com/eralp/ecommerce/controller/CategoryController.class

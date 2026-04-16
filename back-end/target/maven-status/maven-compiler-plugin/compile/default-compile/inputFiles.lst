@@ -1,6 +1,7 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/EcommerceApplication.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/PasswordConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/SecurityConfig.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/AdminController.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/AuthController.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/CartController.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/CategoryController.java
@@ -34,6 +35,7 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/OrderItem.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/OrderStatus.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/Product.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/Role.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/entity/User.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/BadRequestException.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/DuplicateResourceException.java

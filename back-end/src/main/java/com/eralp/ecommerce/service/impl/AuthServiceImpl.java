@@ -3,6 +3,7 @@ package com.eralp.ecommerce.service.impl;
 import com.eralp.ecommerce.dto.auth.AuthResponseDto;
 import com.eralp.ecommerce.dto.auth.LoginRequestDto;
 import com.eralp.ecommerce.dto.auth.RegisterRequestDto;
+import com.eralp.ecommerce.entity.Role;
 import com.eralp.ecommerce.entity.User;
 import com.eralp.ecommerce.exception.BadRequestException;
 import com.eralp.ecommerce.exception.UnauthorizedException;
@@ -41,6 +42,7 @@ public class AuthServiceImpl implements AuthService {
         user.setLastName(nameParts.length > 1 ? nameParts[1] : "");
         user.setEmail(normalizedEmail);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRole(Role.ROLE_USER);
 
         User savedUser = userRepository.save(user);
 
