@@ -1,16 +1,22 @@
 package com.eralp.ecommerce.service;
 
+import com.eralp.ecommerce.dto.common.PagedResponse;
 import com.eralp.ecommerce.dto.product.CreateProductRequest;
 import com.eralp.ecommerce.dto.product.ProductResponse;
 import com.eralp.ecommerce.dto.product.UpdateProductRequest;
-
-import java.util.List;
 
 public interface ProductService {
 
     ProductResponse createProduct(CreateProductRequest request);
 
-    List<ProductResponse> getAllProducts();
+    PagedResponse<ProductResponse> getAllProducts(
+            int page,
+            int size,
+            String sortBy,
+            String sortDir,
+            String name,
+            Long categoryId
+    );
 
     ProductResponse getProductById(Long id);
 

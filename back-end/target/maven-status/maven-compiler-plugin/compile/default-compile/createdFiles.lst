@@ -1,4 +1,5 @@
 com/eralp/ecommerce/service/impl/CategoryServiceImpl.class
+com/eralp/ecommerce/dto/common/PagedResponse$PagedResponseBuilder.class
 com/eralp/ecommerce/EcommerceApplication.class
 com/eralp/ecommerce/controller/CategoryController.class
 com/eralp/ecommerce/dto/product/UpdateProductRequest.class
@@ -9,6 +10,7 @@ com/eralp/ecommerce/entity/Category.class
 com/eralp/ecommerce/service/CategoryService.class
 com/eralp/ecommerce/entity/Product.class
 com/eralp/ecommerce/dto/category/CategoryResponse$CategoryResponseBuilder.class
+com/eralp/ecommerce/dto/common/PagedResponse.class
 com/eralp/ecommerce/exception/ResourceNotFoundException.class
 com/eralp/ecommerce/dto/category/CategoryResponse.class
 com/eralp/ecommerce/repository/CategoryRepository.class
