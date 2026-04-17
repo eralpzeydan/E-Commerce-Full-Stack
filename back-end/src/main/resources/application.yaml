@@ -37,3 +37,10 @@ server:
 jwt:
   secret: your-very-long-secret-key-your-very-long-secret-key
   expiration: 86400000
+
+logging:
+  level:
+    root: INFO
+    com.eralp.ecommerce: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN

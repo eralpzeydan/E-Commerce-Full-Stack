@@ -56,6 +56,7 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/ResourceNotFoundException.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/TransientPaymentException.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/UnauthorizedException.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/logging/RequestLoggingFilter.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/messaging/OrderCreatedConsumer.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/messaging/OrderEventProducer.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/repository/CartItemRepository.java

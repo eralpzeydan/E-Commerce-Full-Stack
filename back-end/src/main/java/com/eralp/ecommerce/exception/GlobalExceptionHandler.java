@@ -2,6 +2,7 @@ package com.eralp.ecommerce.exception;
 
 import com.eralp.ecommerce.dto.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -14,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicateResourceException.class)
@@ -21,6 +23,13 @@ public class GlobalExceptionHandler {
             DuplicateResourceException ex,
             HttpServletRequest request
     ){
+        log.warn(
+                "Duplicate resource. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
@@ -36,6 +45,13 @@ public class GlobalExceptionHandler {
             ConflictException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Conflict detected. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
@@ -51,6 +67,13 @@ public class GlobalExceptionHandler {
             PaymentTemporaryUnavailableException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Temporary payment unavailability. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.SERVICE_UNAVAILABLE.value())
@@ -66,6 +89,13 @@ public class GlobalExceptionHandler {
             MethodArgumentNotValidException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Validation failed. method={} path={} errorCount={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getBindingResult().getErrorCount()
+        );
+
         Map<String, String> validationErrors = new LinkedHashMap<>();
 
         ex.getBindingResult().getFieldErrors().forEach(fieldError ->
@@ -89,6 +119,13 @@ public class GlobalExceptionHandler {
             BadRequestException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Bad request. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -105,6 +142,13 @@ public class GlobalExceptionHandler {
             UnauthorizedException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Unauthorized request. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.UNAUTHORIZED.value())
@@ -121,6 +165,12 @@ public class GlobalExceptionHandler {
             NoResourceFoundException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Resource not found. method={} path={}",
+                request.getMethod(),
+                request.getRequestURI()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
@@ -137,6 +187,13 @@ public class GlobalExceptionHandler {
             IllegalStateException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Illegal state. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
@@ -153,6 +210,13 @@ public class GlobalExceptionHandler {
             IllegalArgumentException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Illegal argument. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.BAD_REQUEST.value())
@@ -169,6 +233,13 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request
     ) {
+        log.error(
+                "Unhandled exception. method={} path={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
@@ -185,6 +256,13 @@ public class GlobalExceptionHandler {
             ResourceNotFoundException ex,
             HttpServletRequest request
     ) {
+        log.warn(
+                "Resource not found. method={} path={} message={}",
+                request.getMethod(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
