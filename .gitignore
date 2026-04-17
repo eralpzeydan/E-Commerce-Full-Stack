@@ -8,3 +8,4 @@ frontend/build/
 backend/target/
 .env
 .env.*
+!back-end/.env.example
