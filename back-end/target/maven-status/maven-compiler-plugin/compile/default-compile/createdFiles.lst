@@ -1,11 +1,13 @@
 com/eralp/ecommerce/dto/auth/LoginRequestDto.class
 com/eralp/ecommerce/repository/OrderRepository.class
 com/eralp/ecommerce/service/AuthService.class
+com/eralp/ecommerce/dto/event/OrderCreatedEvent.class
 com/eralp/ecommerce/dto/order/OrderResponse.class
 com/eralp/ecommerce/dto/cart/CartItemResponse$CartItemResponseBuilder.class
 com/eralp/ecommerce/dto/common/PagedResponse$PagedResponseBuilder.class
 com/eralp/ecommerce/config/RedisConfig.class
 com/eralp/ecommerce/service/CartService.class
+com/eralp/ecommerce/messaging/OrderEventProducer.class
 com/eralp/ecommerce/entity/OrderItem.class
 com/eralp/ecommerce/dto/cart/CartResponse$CartResponseBuilder.class
 com/eralp/ecommerce/EcommerceApplication.class
@@ -14,6 +16,7 @@ com/eralp/ecommerce/dto/product/UpdateProductRequest.class
 com/eralp/ecommerce/repository/CartRepository.class
 com/eralp/ecommerce/dto/category/CreateCategoryRequest.class
 com/eralp/ecommerce/dto/order/OrderItemResponse$OrderItemResponseBuilder.class
+com/eralp/ecommerce/config/RabbitMessageConfig.class
 com/eralp/ecommerce/config/SecurityConfig.class
 com/eralp/ecommerce/exception/UnauthorizedException.class
 com/eralp/ecommerce/entity/Product.class
@@ -24,6 +27,7 @@ com/eralp/ecommerce/exception/ResourceNotFoundException.class
 com/eralp/ecommerce/repository/CategoryRepository.class
 com/eralp/ecommerce/dto/order/OrderItemResponse.class
 com/eralp/ecommerce/controller/CartController.class
+com/eralp/ecommerce/config/RabbitMqConfig.class
 com/eralp/ecommerce/dto/cart/CartResponse.class
 com/eralp/ecommerce/service/impl/CategoryServiceImpl.class
 com/eralp/ecommerce/dto/cart/CartItemResponse.class
@@ -33,7 +37,9 @@ com/eralp/ecommerce/service/impl/AuthServiceImpl.class
 com/eralp/ecommerce/dto/order/OrderResponse$OrderResponseBuilder.class
 com/eralp/ecommerce/entity/Role.class
 com/eralp/ecommerce/repository/OrderItemRepository.class
+com/eralp/ecommerce/service/impl/OrderServiceImpl$1.class
 com/eralp/ecommerce/entity/Cart.class
+com/eralp/ecommerce/messaging/OrderCreatedConsumer.class
 com/eralp/ecommerce/controller/CategoryController.class
 com/eralp/ecommerce/dto/cart/AddCartItemRequest.class
 com/eralp/ecommerce/security/JwtAuthenticationFilter.class

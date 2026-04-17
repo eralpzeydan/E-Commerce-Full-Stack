@@ -32,6 +32,38 @@ public class CartServiceImpl implements CartService {
 
     @Override
     @Transactional
+    public CartResponse getCartByAuthenticatedUser(String email) {
+        User user = findUserByEmail(email);
+        return getCartByUserId(user.getId());
+    }
+
+    @Override
+    @Transactional
+    public CartResponse addItemToCartForAuthenticatedUser(String email, AddCartItemRequest request) {
+        User user = findUserByEmail(email);
+        return addItemToCart(user.getId(), request);
+    }
+
+    @Override
+    @Transactional
+    public CartResponse updateCartItemQuantityForAuthenticatedUser(
+            String email,
+            Long cartItemId,
+            UpdateCartItemQuantityRequest request
+    ) {
+        User user = findUserByEmail(email);
+        return updateCartItemQuantity(user.getId(), cartItemId, request);
+    }
+
+    @Override
+    @Transactional
+    public void removeCartItemForAuthenticatedUser(String email, Long cartItemId) {
+        User user = findUserByEmail(email);
+        removeCartItem(user.getId(), cartItemId);
+    }
+
+    @Override
+    @Transactional
     public CartResponse getCartByUserId(Long userId) {
         Cart cart = getOrCreateCart(userId);
         return mapToCartResponse(cart);
@@ -92,6 +124,12 @@ public class CartServiceImpl implements CartService {
                     cart.setUser(user);
                     return cartRepository.save(cart);
                 });
+    }
+
+    private User findUserByEmail(String email) {
+        String normalizedEmail = email.trim().toLowerCase();
+        return userRepository.findByEmail(normalizedEmail)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + normalizedEmail));
     }
 
     private Product findProductById(Long productId) {

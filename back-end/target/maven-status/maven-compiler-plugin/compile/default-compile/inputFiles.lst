@@ -1,5 +1,7 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/EcommerceApplication.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/PasswordConfig.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/RabbitMessageConfig.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/RabbitMqConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/RedisConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/config/SecurityConfig.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/controller/AdminController.java
@@ -22,6 +24,7 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/category/CreateCategoryRequest.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/category/UpdateCategoryRequest.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/common/PagedResponse.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/event/OrderCreatedEvent.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/order/OrderItemResponse.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/order/OrderResponse.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/dto/product/CreateProductRequest.java
@@ -43,6 +46,8 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/GlobalExceptionHandler.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/ResourceNotFoundException.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/exception/UnauthorizedException.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/messaging/OrderCreatedConsumer.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/messaging/OrderEventProducer.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/repository/CartItemRepository.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/repository/CartRepository.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/main/java/com/eralp/ecommerce/repository/CategoryRepository.java
