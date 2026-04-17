@@ -9,3 +9,4 @@ backend/target/
 .env
 .env.*
 !back-end/.env.example
+.env.example
