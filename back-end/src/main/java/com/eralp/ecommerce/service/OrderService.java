@@ -4,7 +4,7 @@ import com.eralp.ecommerce.dto.order.OrderResponse;
 
 public interface OrderService {
 
-    OrderResponse createOrderFromAuthenticatedUser(String email);
+    OrderResponse createOrderFromAuthenticatedUser(String email, String idempotencyKey);
 
     OrderResponse createOrderFromCart(Long userId);
 }

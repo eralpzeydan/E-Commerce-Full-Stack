@@ -1,1 +1,3 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/EcommerceApplicationTests.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/OrderCheckoutIdempotencyIntegrationTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/OrderCheckoutPaymentRetryIntegrationTest.java

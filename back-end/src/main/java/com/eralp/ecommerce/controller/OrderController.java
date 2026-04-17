@@ -9,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,10 +20,13 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/checkout")
-    public ResponseEntity<OrderResponse> checkout(Authentication authentication) {
+    public ResponseEntity<OrderResponse> checkout(
+            Authentication authentication,
+            @RequestHeader("Idempotency-Key") String idempotencyKey
+    ) {
         String email = authentication.getName();
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(orderService.createOrderFromAuthenticatedUser(email));
+                .body(orderService.createOrderFromAuthenticatedUser(email, idempotencyKey));
     }
 
     @GetMapping("/secure-test")
