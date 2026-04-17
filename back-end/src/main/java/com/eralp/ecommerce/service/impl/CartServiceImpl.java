@@ -88,9 +88,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public CartResponse updateCartItemQuantity(Long userId, Long cartItemId, UpdateCartItemQuantityRequest request) {
         Cart cart = getOrCreateCart(userId);
-
-        CartItem cartItem = cartItemRepository.findByIdAndCartId(cartItemId, cart.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + cartItemId));
+        CartItem cartItem = getCartItemOrThrow(cartItemId, cart.getId());
 
         if (request.getQuantity() == 0) {
             cartItemRepository.delete(cartItem);
@@ -107,10 +105,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public void removeCartItem(Long userId, Long cartItemId) {
         Cart cart = getOrCreateCart(userId);
-
-        CartItem cartItem = cartItemRepository.findByIdAndCartId(cartItemId, cart.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + cartItemId));
-
+        CartItem cartItem = getCartItemOrThrow(cartItemId, cart.getId());
         cartItemRepository.delete(cartItem);
     }
 
@@ -135,6 +130,11 @@ public class CartServiceImpl implements CartService {
     private Product findProductById(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
+    }
+
+    private CartItem getCartItemOrThrow(Long cartItemId, Long cartId) {
+        return cartItemRepository.findByIdAndCartId(cartItemId, cartId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart item not found with id: " + cartItemId));
     }
 
     private CartItem createCartItem(Cart cart, Product product) {

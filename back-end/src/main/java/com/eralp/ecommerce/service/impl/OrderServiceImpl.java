@@ -39,7 +39,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,13 +59,13 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse createOrderFromAuthenticatedUser(String email, String idempotencyKey) {
         String normalizedKey = normalizeIdempotencyKey(idempotencyKey);
         User user = findUserByEmail(email);
+        String requestHash = buildCheckoutRequestHash(user);
 
-        Optional<IdempotencyRecord> existingRecordOptional = idempotencyService.findByKey(normalizedKey);
-        if (existingRecordOptional.isPresent()) {
-            return handleExistingIdempotencyRecord(existingRecordOptional.get(), user);
+        IdempotencyRecord existingRecord = idempotencyService.findByKey(normalizedKey).orElse(null);
+        if (existingRecord != null) {
+            return handleExistingIdempotencyRecord(existingRecord, user, requestHash);
         }
 
-        String requestHash = buildCheckoutRequestHash(user);
         IdempotencyRecord record;
         try {
             record = idempotencyService.createProcessingRecord(
@@ -76,9 +75,9 @@ public class OrderServiceImpl implements OrderService {
                     requestHash
             );
         } catch (DataIntegrityViolationException ex) {
-            IdempotencyRecord existingRecord = idempotencyService.findByKey(normalizedKey)
+            IdempotencyRecord conflictingRecord = idempotencyService.findByKey(normalizedKey)
                     .orElseThrow(() -> new ConflictException("Unable to acquire idempotency lock for checkout"));
-            return handleExistingIdempotencyRecord(existingRecord, user);
+            return handleExistingIdempotencyRecord(conflictingRecord, user, requestHash);
         }
 
         try {
@@ -94,28 +93,24 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderResponse createOrderFromCart(Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
+        User user = findUserById(userId);
         return createOrderForUser(user, null);
     }
 
     private OrderResponse handleExistingIdempotencyRecord(
             IdempotencyRecord record,
-            User user
+            User user,
+            String requestHash
     ) {
         validateIdempotencyOwnership(record, user.getId());
 
         if (record.getStatus() == IdempotencyStatus.SUCCESS) {
-            if (record.getResponseOrderId() == null) {
-                throw new ConflictException("Idempotency record is successful but order reference is missing");
-            }
-            Order existingOrder = orderRepository.findById(record.getResponseOrderId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
+            Order existingOrder = getSuccessfulOrder(record);
             return mapToResponse(existingOrder);
         }
 
         if (record.getStatus() == IdempotencyStatus.PROCESSING) {
-            validateProcessingRequestHash(record, buildCheckoutRequestHash(user));
+            validateProcessingRequestHash(record, requestHash);
             throw new ConflictException("Request is already being processed");
         }
 
@@ -146,9 +141,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private String buildCheckoutRequestHash(User user) {
-        Cart cart = cartRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cart not found for user id: " + user.getId()));
-
+        Cart cart = findCartByUserId(user.getId());
         List<CartItem> cartItems = cartItemRepository.findAllByCartId(cart.getId());
         String cartSnapshot = cartItems.stream()
                 .sorted(Comparator.comparing(cartItem -> cartItem.getProduct().getId()))
@@ -167,58 +160,89 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private OrderResponse createOrderForUser(User user, String idempotencyKey) {
-        Cart cart = cartRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Cart not found for user id: " + user.getId()));
+        Cart cart = findCartByUserId(user.getId());
+        List<CartItem> cartItems = getCartItemsForCheckout(cart);
+        Order savedOrder = saveOrder(user, cartItems);
 
-        List<CartItem> cartItems = cartItemRepository.findAllByCartId(cart.getId());
-        if (cartItems.isEmpty()) {
-            throw new BadRequestException("Cannot create order from empty cart");
-        }
-
-        Order order = new Order();
-        order.setUser(user);
-        order.setStatus(OrderStatus.PENDING);
-
-        BigDecimal totalAmount = BigDecimal.ZERO;
-
-        for (CartItem cartItem : cartItems) {
-            Product product = cartItem.getProduct();
-            if (product == null) {
-                throw new BadRequestException("Cart contains invalid product");
-            }
-            if (cartItem.getQuantity() == null || cartItem.getQuantity() <= 0) {
-                throw new BadRequestException("Cart item quantity must be greater than zero");
-            }
-
-            BigDecimal unitPrice = cartItem.getUnitPrice();
-            BigDecimal lineTotal = unitPrice.multiply(BigDecimal.valueOf(cartItem.getQuantity()));
-
-            OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(product);
-            orderItem.setQuantity(cartItem.getQuantity());
-            orderItem.setUnitPrice(unitPrice);
-            orderItem.setLineTotal(lineTotal);
-
-            order.addOrderItem(orderItem);
-            totalAmount = totalAmount.add(lineTotal);
-        }
-
-        order.setTotalAmount(totalAmount);
-        Order savedOrder = orderRepository.save(order);
         paymentClient.authorizePayment(savedOrder.getId(), savedOrder.getTotalAmount(), idempotencyKey);
-
-        cartItemRepository.deleteAll(cartItems);
-        cartItemRepository.flush();
-
+        clearCartItems(cartItems);
         publishOrderCreatedAfterCommit(savedOrder);
 
         return mapToResponse(savedOrder);
+    }
+
+    private User findUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + userId));
     }
 
     private User findUserByEmail(String email) {
         String normalizedEmail = email.trim().toLowerCase();
         return userRepository.findByEmail(normalizedEmail)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + normalizedEmail));
+    }
+
+    private Cart findCartByUserId(Long userId) {
+        return cartRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Cart not found for user id: " + userId));
+    }
+
+    private List<CartItem> getCartItemsForCheckout(Cart cart) {
+        List<CartItem> cartItems = cartItemRepository.findAllByCartId(cart.getId());
+        if (cartItems.isEmpty()) {
+            throw new BadRequestException("Cannot create order from empty cart");
+        }
+        return cartItems;
+    }
+
+    private Order saveOrder(User user, List<CartItem> cartItems) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setStatus(OrderStatus.PENDING);
+
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (CartItem cartItem : cartItems) {
+            OrderItem orderItem = mapCartItemToOrderItem(cartItem);
+            order.addOrderItem(orderItem);
+            totalAmount = totalAmount.add(orderItem.getLineTotal());
+        }
+
+        order.setTotalAmount(totalAmount);
+        return orderRepository.save(order);
+    }
+
+    private OrderItem mapCartItemToOrderItem(CartItem cartItem) {
+        Product product = cartItem.getProduct();
+        if (product == null) {
+            throw new BadRequestException("Cart contains invalid product");
+        }
+        if (cartItem.getQuantity() == null || cartItem.getQuantity() <= 0) {
+            throw new BadRequestException("Cart item quantity must be greater than zero");
+        }
+
+        BigDecimal unitPrice = cartItem.getUnitPrice();
+        BigDecimal lineTotal = unitPrice.multiply(BigDecimal.valueOf(cartItem.getQuantity()));
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        orderItem.setQuantity(cartItem.getQuantity());
+        orderItem.setUnitPrice(unitPrice);
+        orderItem.setLineTotal(lineTotal);
+        return orderItem;
+    }
+
+    private void clearCartItems(List<CartItem> cartItems) {
+        cartItemRepository.deleteAll(cartItems);
+        cartItemRepository.flush();
+    }
+
+    private Order getSuccessfulOrder(IdempotencyRecord record) {
+        if (record.getResponseOrderId() == null) {
+            throw new ConflictException("Idempotency record is successful but order reference is missing");
+        }
+        Long orderId = record.getResponseOrderId();
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + orderId));
     }
 
     private void publishOrderCreatedAfterCommit(Order savedOrder) {

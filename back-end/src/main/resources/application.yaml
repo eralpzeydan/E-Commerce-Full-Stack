@@ -26,7 +26,8 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    open-in-view: false
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -57,6 +58,5 @@ logging:
   level:
     root: INFO
     com.eralp.ecommerce: INFO
-    org.springframework.boot.actuate: INFO
     org.hibernate.SQL: WARN
     org.hibernate.orm.jdbc.bind: WARN

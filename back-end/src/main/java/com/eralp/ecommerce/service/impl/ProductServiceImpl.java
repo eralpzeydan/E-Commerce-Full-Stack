@@ -6,6 +6,7 @@ import com.eralp.ecommerce.dto.product.ProductResponse;
 import com.eralp.ecommerce.dto.product.UpdateProductRequest;
 import com.eralp.ecommerce.entity.Category;
 import com.eralp.ecommerce.entity.Product;
+import com.eralp.ecommerce.exception.ConflictException;
 import com.eralp.ecommerce.exception.ResourceNotFoundException;
 import com.eralp.ecommerce.repository.CategoryRepository;
 import com.eralp.ecommerce.repository.OrderItemRepository;
@@ -106,7 +107,6 @@ public class ProductServiceImpl implements ProductService {
     @Cacheable(value = "product", key = "#id")
     @Transactional(readOnly = true)
     public ProductResponse getProductById(Long id) {
-        System.out.println("🔥 DB HIT - productId: " + id);
         Product product = findProductById(id);
         return mapToResponse(product);
     }
@@ -139,7 +139,7 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Long id) {
         Product product = findProductById(id);
         if (orderItemRepository.existsByProductId(id)) {
-            throw new IllegalStateException("Product cannot be deleted because it exists in orders");
+            throw new ConflictException("Product cannot be deleted because it exists in orders");
         }
         productRepository.delete(product);
     }

@@ -42,7 +42,7 @@ public class IdempotencyService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void markSuccess(Long idempotencyRecordId, Long orderId) {
         IdempotencyRecord record = idempotencyRecordRepository.findById(idempotencyRecordId)
-                .orElseThrow(() -> new ResourceNotFoundException("Idempotency record not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Idempotency record not found with id: " + idempotencyRecordId));
         record.setStatus(IdempotencyStatus.SUCCESS);
         record.setResponseOrderId(orderId);
         idempotencyRecordRepository.save(record);
@@ -51,7 +51,7 @@ public class IdempotencyService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void markFailed(Long idempotencyRecordId) {
         IdempotencyRecord record = idempotencyRecordRepository.findById(idempotencyRecordId)
-                .orElseThrow(() -> new ResourceNotFoundException("Idempotency record not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Idempotency record not found with id: " + idempotencyRecordId));
         record.setStatus(IdempotencyStatus.FAILED);
         idempotencyRecordRepository.save(record);
     }

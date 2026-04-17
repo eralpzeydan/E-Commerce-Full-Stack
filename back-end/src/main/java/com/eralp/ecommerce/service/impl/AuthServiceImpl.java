@@ -29,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public AuthResponseDto register(RegisterRequestDto request) {
-        String normalizedEmail = request.getEmail().trim().toLowerCase();
+        String normalizedEmail = normalizeEmail(request.getEmail());
         if (userRepository.existsByEmail(normalizedEmail)) {
             throw new BadRequestException("Email is already in use");
         }
@@ -58,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional(readOnly = true)
     public AuthResponseDto login(LoginRequestDto request) {
-        String normalizedEmail = request.getEmail().trim().toLowerCase();
+        String normalizedEmail = normalizeEmail(request.getEmail());
 
         User user = userRepository.findByEmail(normalizedEmail)
                 .orElseThrow(() -> new UnauthorizedException("Invalid email or password"));
@@ -83,5 +83,12 @@ public class AuthServiceImpl implements AuthService {
         String firstName = user.getFirstName() == null ? "" : user.getFirstName().trim();
         String lastName = user.getLastName() == null ? "" : user.getLastName().trim();
         return (firstName + " " + lastName).trim();
+    }
+
+    private String normalizeEmail(String email) {
+        if (email == null) {
+            return null;
+        }
+        return email.trim().toLowerCase();
     }
 }

@@ -3,6 +3,7 @@ package com.eralp.ecommerce.service.impl;
 import com.eralp.ecommerce.dto.user.CreateUserRequest;
 import com.eralp.ecommerce.dto.user.UserResponse;
 import com.eralp.ecommerce.entity.User;
+import com.eralp.ecommerce.exception.ConflictException;
 import com.eralp.ecommerce.exception.DuplicateResourceException;
 import com.eralp.ecommerce.exception.ResourceNotFoundException;
 import com.eralp.ecommerce.repository.CartRepository;
@@ -62,18 +63,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUser(Long id){
-        if (!userRepository.existsById(id)) {
-           throw new ResourceNotFoundException("User not found with id: " + id);
-       }
+       User user = findUserById(id);
        if (orderRepository.existsByUserId(id)) {
-           throw new IllegalStateException("User cannot be deleted because they have orders");
+           throw new ConflictException("User cannot be deleted because they have orders");
        }
        cartRepository.findByUserId(id).ifPresent(cartRepository::delete);
-       userRepository.deleteById(id);
+       userRepository.delete(user);
     }
 
+    private User findUserById(Long id) {
+       return userRepository.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+    }
 
-    public UserResponse mapToResponse(User user){
+    private UserResponse mapToResponse(User user){
         return UserResponse.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())

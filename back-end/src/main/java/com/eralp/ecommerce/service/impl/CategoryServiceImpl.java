@@ -4,6 +4,7 @@ import com.eralp.ecommerce.dto.category.CategoryResponse;
 import com.eralp.ecommerce.dto.category.CreateCategoryRequest;
 import com.eralp.ecommerce.dto.category.UpdateCategoryRequest;
 import com.eralp.ecommerce.entity.Category;
+import com.eralp.ecommerce.exception.ConflictException;
 import com.eralp.ecommerce.exception.DuplicateResourceException;
 import com.eralp.ecommerce.exception.ResourceNotFoundException;
 import com.eralp.ecommerce.repository.CategoryRepository;
@@ -77,7 +78,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = findCategoryById(id);
 
         if (productRepository.existsByCategoryId(id)) {
-            throw new IllegalStateException("Category cannot be deleted because it still has products");
+            throw new ConflictException("Category cannot be deleted because it still has products");
         }
 
         categoryRepository.delete(category);
