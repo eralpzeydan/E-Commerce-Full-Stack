@@ -16,6 +16,7 @@ import com.eralp.ecommerce.repository.CartItemRepository;
 import com.eralp.ecommerce.repository.CartRepository;
 import com.eralp.ecommerce.repository.CategoryRepository;
 import com.eralp.ecommerce.repository.IdempotencyRecordRepository;
+import com.eralp.ecommerce.repository.OrderItemRepository;
 import com.eralp.ecommerce.repository.OrderRepository;
 import com.eralp.ecommerce.repository.ProductRepository;
 import com.eralp.ecommerce.repository.UserRepository;
@@ -28,7 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -52,7 +53,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@Sql(scripts = "/cleanup.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@ActiveProfiles("test")
 class OrderCheckoutIdempotencyIntegrationTest {
 
     @Autowired
@@ -80,6 +81,9 @@ class OrderCheckoutIdempotencyIntegrationTest {
     private OrderRepository orderRepository;
 
     @Autowired
+    private OrderItemRepository orderItemRepository;
+
+    @Autowired
     private IdempotencyRecordRepository idempotencyRecordRepository;
 
     @MockBean
@@ -93,6 +97,7 @@ class OrderCheckoutIdempotencyIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        cleanDatabase();
         testUser = createUserWithCart("test@example.com");
         category = createCategory("electronics");
         prepareCart("test@example.com");
@@ -257,6 +262,17 @@ class OrderCheckoutIdempotencyIntegrationTest {
         cartItem.setQuantity(quantity);
         cartItem.setUnitPrice(price);
         cartItemRepository.save(cartItem);
+    }
+
+    private void cleanDatabase() {
+        idempotencyRecordRepository.deleteAll();
+        orderItemRepository.deleteAll();
+        orderRepository.deleteAll();
+        cartItemRepository.deleteAll();
+        productRepository.deleteAll();
+        categoryRepository.deleteAll();
+        cartRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     private String expectedCheckoutHash(Long userId) {

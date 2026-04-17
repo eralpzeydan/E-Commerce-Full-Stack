@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.eralp.ecommerce.OrderCheckoutPaymentRetryIntegrationTest" time="0.996" tests="2" errors="0" skipped="0" failures="0" flakes="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="com.eralp.ecommerce.integration.AuthIntegrationTest" time="0.602" tests="4" errors="0" skipped="0" failures="0" flakes="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -65,15 +65,27 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[ecommerce] "/>
   </properties>
-  <testcase name="shouldNotRetryWhenCheckoutFailsDueToPermanentBusinessError" classname="com.eralp.ecommerce.OrderCheckoutPaymentRetryIntegrationTest" time="0.05">
-    <system-out><![CDATA[2026-04-17T18:50:39.204+03:00  INFO 51340 --- [ecommerce] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.eralp.ecommerce.OrderCheckoutPaymentRetryIntegrationTest]: OrderCheckoutPaymentRetryIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2026-04-17T18:50:39.206+03:00  INFO 51340 --- [ecommerce] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.eralp.ecommerce.EcommerceApplication for test class com.eralp.ecommerce.OrderCheckoutPaymentRetryIntegrationTest
-2026-04-17T18:50:39.248+03:00  WARN 51340 --- [ecommerce] [           main] c.e.e.exception.GlobalExceptionHandler   : Bad request. method=POST path=/api/v1/orders/checkout message=Cannot create order from empty cart
-2026-04-17T18:50:39.249+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/v1/orders/checkout status=400 durationMs=8
+  <testcase name="shouldRegisterUserSuccessfully" classname="com.eralp.ecommerce.integration.AuthIntegrationTest" time="0.147">
+    <system-out><![CDATA[2026-04-17T18:50:38.541+03:00  INFO 51340 --- [ecommerce] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.eralp.ecommerce.integration.AuthIntegrationTest]: AuthIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-04-17T18:50:38.544+03:00  INFO 51340 --- [ecommerce] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.eralp.ecommerce.EcommerceApplication for test class com.eralp.ecommerce.integration.AuthIntegrationTest
+2026-04-17T18:50:38.677+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/register status=201 durationMs=123
 ]]></system-out>
   </testcase>
-  <testcase name="shouldRetryPaymentOnTransientFailureAndEventuallySucceed" classname="com.eralp.ecommerce.OrderCheckoutPaymentRetryIntegrationTest" time="0.939">
-    <system-out><![CDATA[2026-04-17T18:50:40.194+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/v1/orders/checkout status=201 durationMs=920
+  <testcase name="shouldLoginSuccessfullyAndReturnToken" classname="com.eralp.ecommerce.integration.AuthIntegrationTest" time="0.198">
+    <system-out><![CDATA[2026-04-17T18:50:38.777+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/register status=201 durationMs=79
+2026-04-17T18:50:38.887+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/login status=200 durationMs=108
+]]></system-out>
+  </testcase>
+  <testcase name="shouldReturnBadRequestWhenEmailAlreadyExists" classname="com.eralp.ecommerce.integration.AuthIntegrationTest" time="0.088">
+    <system-out><![CDATA[2026-04-17T18:50:38.974+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/register status=201 durationMs=78
+2026-04-17T18:50:38.977+03:00  WARN 51340 --- [ecommerce] [           main] c.e.e.exception.GlobalExceptionHandler   : Bad request. method=POST path=/api/auth/register message=Email is already in use
+2026-04-17T18:50:38.978+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/register status=400 durationMs=3
+]]></system-out>
+  </testcase>
+  <testcase name="shouldReturnUnauthorizedForInvalidCredentials" classname="com.eralp.ecommerce.integration.AuthIntegrationTest" time="0.161">
+    <system-out><![CDATA[2026-04-17T18:50:39.061+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/register status=201 durationMs=77
+2026-04-17T18:50:39.138+03:00  WARN 51340 --- [ecommerce] [           main] c.e.e.exception.GlobalExceptionHandler   : Unauthorized request. method=POST path=/api/auth/login message=Invalid email or password
+2026-04-17T18:50:39.139+03:00  INFO 51340 --- [ecommerce] [           main] c.e.e.logging.RequestLoggingFilter       : Request completed: method=POST path=/api/auth/login status=401 durationMs=77
 ]]></system-out>
   </testcase>
 </testsuite>

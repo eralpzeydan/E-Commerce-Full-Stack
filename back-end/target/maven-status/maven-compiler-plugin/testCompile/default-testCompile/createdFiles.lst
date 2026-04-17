@@ -1,2 +1,8 @@
 com/eralp/ecommerce/OrderCheckoutIdempotencyIntegrationTest.class
+com/eralp/ecommerce/integration/SecurityIntegrationTest.class
+com/eralp/ecommerce/service/OrderServiceImplTest.class
 com/eralp/ecommerce/OrderCheckoutPaymentRetryIntegrationTest.class
+com/eralp/ecommerce/service/CartServiceImplTest.class
+com/eralp/ecommerce/service/AuthServiceImplTest.class
+com/eralp/ecommerce/integration/AuthIntegrationTest.class
+com/eralp/ecommerce/integration/OrderIntegrationTest.class

@@ -1,3 +1,9 @@
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/EcommerceApplicationTests.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/OrderCheckoutIdempotencyIntegrationTest.java
 /Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/OrderCheckoutPaymentRetryIntegrationTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/integration/AuthIntegrationTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/integration/OrderIntegrationTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/integration/SecurityIntegrationTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/service/AuthServiceImplTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/service/CartServiceImplTest.java
+/Users/eralpzeydan/Desktop/eralp/code/E-Commerce-Full-Stack/back-end/src/test/java/com/eralp/ecommerce/service/OrderServiceImplTest.java
