@@ -1,0 +1,18 @@
+spring:
+  # Docker Compose setup for this task runs only app + postgres.
+  # Disable external integrations that are not part of compose.
+  cache:
+    type: simple
+
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+  rabbitmq:
+    dynamic: false
+    listener:
+      simple:
+        auto-startup: false
+      direct:
+        auto-startup: false
