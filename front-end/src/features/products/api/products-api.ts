@@ -1,13 +1,13 @@
 import { z } from "zod";
 
+import {
+  type Product,
+  type ProductsQueryParams,
+  productSchema,
+} from "@/features/products/types/product-types";
 import { API_ENDPOINTS } from "@/shared/api/endpoints";
 import { apiRequest } from "@/shared/api/request";
 import { type PagedResponse } from "@/shared/types/paged-response";
-import {
-  type ListProductsParams,
-  type Product,
-  productSchema,
-} from "@/features/products/types/product.types";
 
 const pagedProductsSchema = z.object({
   content: z.array(productSchema),
@@ -22,7 +22,7 @@ const pagedProductsSchema = z.object({
 });
 
 export async function listProducts(
-  params: ListProductsParams = {},
+  params: ProductsQueryParams,
 ): Promise<PagedResponse<Product>> {
   const data = await apiRequest<PagedResponse<Product>>({
     method: "GET",

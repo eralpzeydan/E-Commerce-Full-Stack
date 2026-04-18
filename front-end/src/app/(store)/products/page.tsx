@@ -1,10 +1,5 @@
-import { ProductsListScreen } from "@/features/products/components/products-list-screen";
-import { PageContainer } from "@/shared/components/layout/page-container";
+import { ProductsScreen } from "@/features/products/components/products-screen";
 
 export default function ProductsPage() {
-  return (
-    <PageContainer title="Products" description="All products from the backend API.">
-      <ProductsListScreen />
-    </PageContainer>
-  );
+  return <ProductsScreen />;
 }

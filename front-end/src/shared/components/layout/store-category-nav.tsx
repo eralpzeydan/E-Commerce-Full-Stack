@@ -19,7 +19,7 @@ export function StoreCategoryNav() {
         {categoryItems.map((category) => (
           <Link
             key={category}
-            href={`/products?category=${encodeURIComponent(category.toLowerCase())}`}
+            href="/products"
             className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-1.5 text-xs font-semibold text-[var(--color-text-muted)] transition hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
           >
             {category}

@@ -10,7 +10,8 @@ describe("StorefrontShell", () => {
       </StorefrontShell>,
     );
 
-    expect(screen.getByText("Free shipping for orders over $100")).toBeInTheDocument();
+    expect(screen.getByText(/free shipping/i)).toBeInTheDocument();
+    expect(screen.getByText(/secure payment/i)).toBeInTheDocument();
     expect(screen.getByText("E-Commerce Studio")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Shop All" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Electronics" })).toBeInTheDocument();
